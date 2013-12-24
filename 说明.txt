@@ -1,0 +1,219 @@
+一.安装
+1.查看php命令是否可用
+php -v 
+如果有信息证明PHP安装好了,而且可用
+
+2.在命令行下进行framework目录中
+
+php yiic.php webapp ../cms
+
+
+二.使用
+1.修改默认控制器
+在应用名/protected/config/main.php中的数组中加入
+'defaultController'=>'Index', # 默认控制器
+
+2.取得应用程序的相对URL 如 /blog 格式
+Yii::app()->request->baseUrl
+例:<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/assets/web/css/index.css">
+
+3.分配数据
+控制器
+function actionIndex() {
+	$data = array(
+		'title'=>'文章网'
+	);
+    $this->renderPartial('index',$data);
+}
+视图
+<?php echo $title; ?>
+
+4.扩展自定义函数
+在protected目录建立functions.php文件
+在单入口引入函数
+include './protected/functions.php';
+
+5.布局
+
+6. gii模块使用
+1).打开模块,在config/main.php
+'gii'=>array(
+	'class'=>'system.gii.GiiModule',
+	'password'=>'Enter Your Password Here',//设置密码
+	'ipFilters'=>array('127.0.0.1','::1')
+);
+把这个注释给去掉
+
+如何来访问
+http://yii.com/blog/index.php?r=admin/default/add
+http://yii.com/blog/index.php?r=模块/控制器/方法
+
+//自定义后台默认控制器
+$this -> defaultController = "index";
+
+7.小物件 widget
+CActiveForm类下面找方法
+<?php $form = $this->beginWidget('CActiveForm')?>
+<?php echo $form->textField(模型,'表单名',html属性)?>
+<?php $this->endWidget()?>
+
+8.验证码使用
+1).建立方法actions;
+function actions(){
+	return array(
+		'captcha'=>array(
+			'class'=>'CCaptchaAction',
+			'height'=>25,
+			'width'=>80,
+			'minLength'=>4,
+			'maxLength'=>4
+		)
+	);
+}或
+这个写法是路径别名写法,其中system代表着 framework这个目录
+function actions(){
+	return array(
+		'captcha'=>array(
+			'class'=>'system.web.widgets.captcha.CCaptchaAction',
+			'height'=>25,
+			'width'=>80,
+			'minLength'=>4,
+			'maxLength'=>4
+		)
+	);
+}
+后可以访问:http://yii.com/blog/index.php?r=admin/login/captcha
+2).在视频中应用小物件
+a.普通写法:
+<?php $this->widget('CCaptcha')?>
+b.带看不清楚,刷新功能
+<?php
+$this->widget('CCaptcha',array(
+	'showRefreshButton'=>false,
+	'clickableImage'=>true,
+	'imageOptions'=>array('alt'=>'点击换图','title'=>'点击换图','style'=>'cursor:pointer')
+));
+?>
+
+在视图可以获得错误
+<?php echo $form->error(模型名<$loginForm>,'captcha');?>
+
+3).修改核心类CCaptchaAction
+在此文件中找到run方法修改
+$this->renderImage($this->getVerifyCode());
+将其修改为:
+$this->renderImage($this->getVerifyCode(true));即可,其实就在参了一个true过去就可以了
+
+4).设置比对规则
+在LoginForm.php文件中
+public function rules()
+{
+        return array(
+                // username and password are required
+                array('username, password', 'required'),
+                // rememberMe needs to be a boolean
+                array('rememberMe', 'boolean'),
+                // password needs to be authenticated
+                array('password', 'authenticate'),
+
+                array('captcha','captcha','message'=>'验证码错误'), # 这行就是比较验证码的
+        );
+}
+
+然后在:LoginController.php中加入验证即可
+function actionIndex() {
+    $loginForm = new LoginForm();
+    if (isset($_POST['LoginForm'])) {
+        $loginForm->attributes = $_POST['LoginForm'];
+        if ($loginForm->validate()) {
+           echo 'code.....';
+        }
+    }
+    $this->render('index', array('loginForm' => $loginForm));
+}
+
+9.为后台(admin)模块设置单独布局文件
+1).在protected里面的components文件夹复制一份,放到modules里面的模块目录(admin)下面,不需要components里面的UserIndenity.php
+2).在模块下面的视图views目录里面建立layouts目录,里面放置模块的布局文件(例:adminlayout.php).
+3).设置 public $layout='//layouts/xxx'; 设置为自己刚刚定义的布局文件(例:public $layout='/layouts/adminlayout'不需要扩展名),还有去掉1个前面/,只保留一个即可
+4).如果后台模块没有公共区域直接在布局文件里面写<?php echo $content;?>
+
+10.数据库连接配置
+1).在main.php里面开启
+'db'=>array(
+        'connectionString' => 'mysql:host=localhost;dbname=testdrive',
+        'emulatePrepare' => true, //PDO扩展
+        'username' => 'root',
+        'password' => '',
+        'charset' => 'utf8',
+        'tablePrefix'=>'yii_',// 定义表前缀
+        'enableParamLogging'=>true //开启试息SQL语句具体值
+),
+
+11.开启SQL调试信息界面
+
+12.定义模型Model
+在项目/proected/models/最好以数据表名一致来使名<User.php>
+/**
+ * 后台用户模型
+ */
+class User extends CActiveRecord{
+    
+    /**
+     * 必不可缺方法1,返回模型
+     * @param type $className
+     * @return type
+     */
+    static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+    
+    /**
+     * 必不可缺方法2,返回表名 不用写前缀,用两个花括号括起来
+     * @return type
+     */
+    public function tableName() {
+        return "{{admin}}";
+    }
+}
+
+
+13.登陆验证
+1).LoginForm.php
+    public function rules() {
+        return array(
+            array('username','required','message'=>'用户名不能为空'),
+            array('password','required','message'=>'密码不能为空'),
+            array('password', 'authenticate'),
+            array('captcha', 'captcha', 'message' => '验证码错误'),
+        );
+    }
+2).UserIdentity.php
+public function authenticate() {
+
+        //自己定义用户验证登陆判断
+        $userInfo = User::model()->find('username=:name', array(':name' => $this->username));
+        if ($userInfo == NULL) {
+            $this->errorCode = self::ERROR_USERNAME_INVALID;
+            return false;
+        }
+        if ($userInfo->password != md5($this->password)) {
+            $this->errorCode = self::ERROR_PASSWORD_INVALID;
+            return false;
+        }
+        $this->errorCode = self::ERROR_NONE;
+        return true;
+}
+3).LoginController.php
+function actionIndex() {
+    #$userInfo = User::model()->find('username=:name', array(':name'=>'admin'));
+    #p($userInfo);
+    $loginForm = new LoginForm();
+    if (isset($_POST['LoginForm'])) {
+        $loginForm->attributes = $_POST['LoginForm'];
+        if ($loginForm->validate() && $loginForm->login()) {
+                echo 11111;
+        }
+    }
+    $this->render('index', array('loginForm' => $loginForm));
+}
