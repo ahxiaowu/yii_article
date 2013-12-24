@@ -1026,3 +1026,68 @@ in D:\work\yiitest\blog\index.php (14)
 2013/12/23 17:02:07 [warning] [application] Failed to set unsafe attribute "pic" of "Article".
 in D:\work\yiitest\blog\protected\modules\admin\controllers\ArticleController.php (58)
 in D:\work\yiitest\blog\index.php (14)
+2013/12/24 13:48:08 [error] [exception.CHttpException.404] exception 'CHttpException' with message 'The system is unable to find the requested action "edit".' in D:\work\yii_article\framework\web\CController.php:483
+Stack trace:
+#0 D:\work\yii_article\framework\web\CController.php(270): CController->missingAction('edit')
+#1 D:\work\yii_article\framework\web\CWebApplication.php(282): CController->run('edit')
+#2 D:\work\yii_article\framework\web\CWebApplication.php(141): CWebApplication->runController('admin/article/e...')
+#3 D:\work\yii_article\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#4 D:\work\yii_article\blog\index.php(14): CApplication->run()
+#5 {main}
+REQUEST_URI=/blog/index.php?r=admin/article/edit&aid=6
+HTTP_REFERER=http://yii.com/blog/index.php?r=admin/article/index
+---
+2013/12/24 14:54:16 [error] [php] Invalid argument supplied for foreach() (D:\work\yii_article\blog\protected\views\index\index.php:9)
+Stack trace:
+#0 D:\work\yii_article\framework\web\CController.php(869): IndexController->renderFile()
+#1 D:\work\yii_article\framework\web\CController.php(782): IndexController->renderPartial()
+#2 D:\work\yii_article\blog\protected\controllers\IndexController.php(9): IndexController->render()
+#3 D:\work\yii_article\framework\web\actions\CInlineAction.php(49): IndexController->actionIndex()
+#4 D:\work\yii_article\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\work\yii_article\framework\web\CController.php(286): IndexController->runAction()
+#6 D:\work\yii_article\framework\web\CController.php(265): IndexController->runActionWithFilters()
+#7 D:\work\yii_article\framework\web\CWebApplication.php(282): IndexController->run()
+#8 D:\work\yii_article\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\work\yii_article\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\work\yii_article\blog\index.php(14): CWebApplication->run()
+REQUEST_URI=/blog/
+in D:\work\yii_article\blog\protected\views\index\index.php (9)
+in D:\work\yii_article\blog\protected\controllers\IndexController.php (9)
+in D:\work\yii_article\blog\index.php (14)
+2013/12/24 15:50:48 [error] [exception.CException] exception 'CException' with message 'Property "Article.cname" is not defined.' in D:\work\yii_article\framework\base\CComponent.php:130
+Stack trace:
+#0 D:\work\yii_article\framework\db\ar\CActiveRecord.php(143): CComponent->__get('cname')
+#1 D:\work\yii_article\blog\protected\models\Article.php(60): CActiveRecord->__get('cname')
+#2 D:\work\yii_article\blog\protected\views\layouts\blog.php(19): Article->common()
+#3 D:\work\yii_article\framework\web\CBaseController.php(126): require('D:\work\yii_art...')
+#4 D:\work\yii_article\framework\web\CBaseController.php(95): CBaseController->renderInternal('D:\work\yii_art...', Array, true)
+#5 D:\work\yii_article\framework\web\CController.php(784): CBaseController->renderFile('D:\work\yii_art...', Array, true)
+#6 D:\work\yii_article\blog\protected\controllers\IndexController.php(25): CController->render('index', Array)
+#7 D:\work\yii_article\framework\web\actions\CInlineAction.php(49): IndexController->actionIndex()
+#8 D:\work\yii_article\framework\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\work\yii_article\framework\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\work\yii_article\framework\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\work\yii_article\framework\web\CWebApplication.php(282): CController->run('')
+#12 D:\work\yii_article\framework\web\CWebApplication.php(141): CWebApplication->runController('')
+#13 D:\work\yii_article\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#14 D:\work\yii_article\blog\index.php(14): CApplication->run()
+#15 {main}
+REQUEST_URI=/blog/
+---
+2013/12/24 16:01:11 [error] [php] Invalid argument supplied for foreach() (D:\work\yii_article\blog\protected\views\cate\index.php:4)
+Stack trace:
+#0 D:\work\yii_article\framework\web\CController.php(869): CateController->renderFile()
+#1 D:\work\yii_article\framework\web\CController.php(782): CateController->renderPartial()
+#2 D:\work\yii_article\blog\protected\controllers\CateController.php(9): CateController->render()
+#3 D:\work\yii_article\framework\web\actions\CInlineAction.php(49): CateController->actionIndex()
+#4 D:\work\yii_article\framework\web\CController.php(308): CInlineAction->runWithParams()
+#5 D:\work\yii_article\framework\web\CController.php(286): CateController->runAction()
+#6 D:\work\yii_article\framework\web\CController.php(265): CateController->runActionWithFilters()
+#7 D:\work\yii_article\framework\web\CWebApplication.php(282): CateController->run()
+#8 D:\work\yii_article\framework\web\CWebApplication.php(141): CWebApplication->runController()
+#9 D:\work\yii_article\framework\base\CApplication.php(169): CWebApplication->processRequest()
+#10 D:\work\yii_article\blog\index.php(14): CWebApplication->run()
+REQUEST_URI=/blog/index.php?r=cate/index&cid=1
+in D:\work\yii_article\blog\protected\views\cate\index.php (4)
+in D:\work\yii_article\blog\protected\controllers\CateController.php (9)
+in D:\work\yii_article\blog\index.php (14)

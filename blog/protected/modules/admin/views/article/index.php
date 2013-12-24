@@ -35,8 +35,8 @@
   		<td><?php echo $obj['cate']->cname; ?></td>
   		<td><?php echo $obj->pubtime; ?></td>
   		<td>
-  		  <a href="<?php echo $this->createUrl('edit', array('cid' => $obj->cid)); ?>">[编辑]</a> 
-  		  <a href="<?php echo $this->createUrl('del', array('cid' => $obj->cid)); ?>">[删除]</a>
+  		  <a href="<?php echo $this->createUrl('edit', array('aid' => $obj->aid)); ?>">[编辑]</a> 
+  		  <a href="<?php echo $this->createUrl('del', array('aid' => $obj->aid)); ?>">[删除]</a>
   		</td>
   	  </tr>
 	  <?php endforeach; ?>
