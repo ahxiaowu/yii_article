@@ -5,13 +5,17 @@
  */
 class IndexController extends Controller {
 
-    function actionIndex() {
-        $this->render('index');
-    }
+	function actionIndex() {
+		$this->render('index');
+	}
 
-    function actionCopy() {
-        $this->render('copy');
-    }
+	function actionCopy() {
+		$this->render('copy');
+	}
+	
+	function actionCopy(){
+		
+	}
 
 }
 
